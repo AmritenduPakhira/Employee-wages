@@ -23,16 +23,16 @@ class EmployeeWageCalculator {
         console.log("----- Employee Monthly Work Simulation -----");
 
         while (this.totalWorkingDays < this.maxDays && this.totalWorkingHours < this.maxHours) {
-            this.totalWorkingDays++; // Count the day regardless of presence
+            this.totalWorkingDays++; 
 
             const isPresent = Math.floor(Math.random() * 2); // 0 = Absent, 1 = Present
 
             if (isPresent === 0) {
                 console.log(`Day ${this.totalWorkingDays}: Absent - No Wage`);
-                continue; // No wage calculation
+                continue; 
             }
 
-            const workType = Math.random() < 0.5 ? 'part-time' : 'full-time';
+            const workType = Math.floor(Math.random() * 2 ) ? 'part-time' : 'full-time';
             const hoursWorked = getWorkHours(workType);
 
             if (this.totalWorkingHours + hoursWorked > this.maxHours) break;
@@ -44,13 +44,13 @@ class EmployeeWageCalculator {
             console.log(`Day ${this.totalWorkingDays}: Present (${workType}) - ${hoursWorked} hrs - ₹${dailyWage}`);
         }
 
-        console.log("\n----- Final Summary -----");
+        console.log("----- Final Summary -----");
         console.log(`Total Days Counted: ${this.totalWorkingDays}`);
         console.log(`Total Hours Worked: ${this.totalWorkingHours}`);
         console.log(`Total Wage: ₹${this.totalWage}`);
     }
 }
 
-// Run it
+
 const employee = new EmployeeWageCalculator();
 employee.simulateMonth();
