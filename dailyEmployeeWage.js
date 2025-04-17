@@ -1,91 +1,56 @@
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-// Crate a function to get work hours based on work type
-function getWorkHours(workType) {
-    switch (workType.toLowerCase()) {
-        case "full-time":
+function getWorkHours(type) {
+    switch (type) {
+        case 'full-time':
             return 8;
-        case "part-time":
+        case 'part-time':
             return 4;
         default:
             return 0;
     }
 }
 
-class DailyEmployeeWages {
-    constructor(name, wagePerHour) {
-        this.name = name;
-        this.wagePerHour = 20; // Default wage per hour
-
+class EmployeeWageCalculator {
+    constructor(wagePerHour = 20) {
+        this.wagePerHour = wagePerHour;
+        this.totalWorkingHours = 0;
+        this.totalWorkingDays = 0;
+        this.totalWage = 0;
+        this.maxHours = 120;
+        this.maxDays = 20;
     }
 
-    checkAttendance() {
-        const attendance = Math.floor(Math.random() * 2);
+    simulateMonth() {
+        console.log("----- Employee Monthly Work Simulation -----");
 
-        if (attendance === 1) {
-            console.log(`${this.name} is Present`);
-            this.askWorkType();
-        } else {
-            console.log(`${this.name} is Absent`);
-            this.askNextEmployee();
-        }
-    }
+        while (this.totalWorkingDays < this.maxDays && this.totalWorkingHours < this.maxHours) {
+            this.totalWorkingDays++; // Count the day regardless of presence
 
-    askWorkType() {
-        rl.question("Enter work type (Full-Time / Part-Time): ", (workType) => {
+            const isPresent = Math.floor(Math.random() * 2); // 0 = Absent, 1 = Present
 
+            if (isPresent === 0) {
+                console.log(`Day ${this.totalWorkingDays}: Absent - No Wage`);
+                continue; // No wage calculation
+            }
+
+            const workType = Math.random() < 0.5 ? 'part-time' : 'full-time';
             const hoursWorked = getWorkHours(workType);
 
-            if (hoursWorked === 0) {
-                console.log("Invalid work type.");
-                this.askNextEmployee();
-                return;
-            }
+            if (this.totalWorkingHours + hoursWorked > this.maxHours) break;
 
-             const workingdays = 20;
+            this.totalWorkingHours += hoursWorked;
+            const dailyWage = hoursWorked * this.wagePerHour;
+            this.totalWage += dailyWage;
 
-            console.log(`${this.name} worked ${hoursWorked} hours.`);
-            const totalWage = hoursWorked * this.wagePerHour;
-            const totalhours = hoursWorked * workingdays;
-            console.log(`${this.name} worked ${totalhours} total hours per month`);
-            console.log(`Total Wage for ${this.name} per day: $${totalWage}`);
-
-            this.calculateMonthlyWage(hoursWorked);
-        });
-    }
-
-    calculateMonthlyWage(dailyHours) {
-        const workingdays = 20;
-        const monthlywage = dailyHours * workingdays * this.wagePerHour;
-        console.log(`Monthly Wage for ${this.name}: $${monthlywage}`);
-        this.askNextEmployee();
-    }
-
-    askNextEmployee() {
-        rl.question("Do you want to check another employee? (y/n): ", (answer) => {
-            if (answer.toLowerCase() === 'y') {
-                askEmployee();
-            } else {
-                rl.close();
-            }
-        });
-    }
-}
-
-function askEmployee() {
-    rl.question("Enter employee name (or type 'n' to stop): ", (employeeName) => {
-        if (employeeName.toLowerCase() === 'n') {
-            rl.close();
-        } else {
-            const employee = new DailyEmployeeWages(employeeName);
-            employee.checkAttendance();
+            console.log(`Day ${this.totalWorkingDays}: Present (${workType}) - ${hoursWorked} hrs - ₹${dailyWage}`);
         }
-    });
+
+        console.log("\n----- Final Summary -----");
+        console.log(`Total Days Counted: ${this.totalWorkingDays}`);
+        console.log(`Total Hours Worked: ${this.totalWorkingHours}`);
+        console.log(`Total Wage: ₹${this.totalWage}`);
+    }
 }
 
-askEmployee();
+// Run it
+const employee = new EmployeeWageCalculator();
+employee.simulateMonth();
