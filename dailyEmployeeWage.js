@@ -1,91 +1,68 @@
-const readline = require('readline');
 
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout,
-});
-
-// Crate a function to get work hours based on work type
-function getWorkHours(workType) {
-    switch (workType.toLowerCase()) {
-        case "full-time":
-            return 8;
-        case "part-time":
-            return 4;
-        default:
-            return 0;
-    }
-}
-
-class DailyEmployeeWages {
-    constructor(name, wagePerHour) {
-        this.name = name;
-        this.wagePerHour = 20; // Default wage per hour
-
+class Emmployeewages {
+    constructor(wageperhour = 20) {
+        this.wageperhour = wageperhour;
+        this.workingdays = 20;
+        this.totalwage = 0;
+        this.totalworkinghours = 0;
+        this.totalwalkingdays = 0;
     }
 
-    checkAttendance() {
-        const attendance = Math.floor(Math.random() * 2);
-
-        if (attendance === 1) {
-            console.log(`${this.name} is Present`);
-            this.askWorkType();
-        } else {
-            console.log(`${this.name} is Absent`);
-            this.askNextEmployee();
+    getworkhours(empcheck) {
+        switch (empcheck) {
+            case 1:
+                return 8;
+            case 2:
+                return 4;
+            default:
+                return 0;
         }
     }
 
-    askWorkType() {
-        rl.question("Enter work type (Full-Time / Part-Time): ", (workType) => {
+    calculatewage() {
+        const check = Math.floor(Math.random() * 2); 
 
-            const hoursWorked = getWorkHours(workType);
+        while(this.totalwalkingdays  < this.workingdays) {
+            this.totalwalkingdays++;
 
-            if (hoursWorked === 0) {
-                console.log("Invalid work type.");
-                this.askNextEmployee();
-                return;
-            }
+            if (check === 1) {
+                console.log("Employee is present " + this.totalwalkingdays + " day");
+                const checker = Math.floor(Math.random() * 2) + 1; 
+    
+                const hours = this.getworkhours(checker);
+    
+                if (hours === 8) {
+                    console.log("Employee is full time present");
+                } else if (hours === 4) {
+                    console.log("Employee is part time present");
+                }
 
-             const workingdays = 20;
-
-            console.log(`${this.name} worked ${hoursWorked} hours.`);
-            const totalWage = hoursWorked * this.wagePerHour;
-            const totalhours = hoursWorked * workingdays;
-            console.log(`${this.name} worked ${totalhours} total hours per month`);
-            console.log(`Total Wage for ${this.name} per day: $${totalWage}`);
-
-            this.calculateMonthlyWage(hoursWorked);
-        });
-    }
-
-    calculateMonthlyWage(dailyHours) {
-        const workingdays = 20;
-        const monthlywage = dailyHours * workingdays * this.wagePerHour;
-        console.log(`Monthly Wage for ${this.name}: $${monthlywage}`);
-        this.askNextEmployee();
-    }
-
-    askNextEmployee() {
-        rl.question("Do you want to check another employee? (y/n): ", (answer) => {
-            if (answer.toLowerCase() === 'y') {
-                askEmployee();
+                
+                const empwage = hours * this.wageperhour;
+                console.log("Employee wage is: " + empwage);
+                
+                this.totalworkinghours += hours;
+            
+                this.totalwage += empwage;
+               
             } else {
-                rl.close();
+
+                console.log("Employee is absent" + this.totalwalkingdays + " day");
+                console.log("Employee wage is: 0");
+                continue;
             }
-        });
+
+
+
+        }
+
+        console.log("Total working hours: " + this.totalworkinghours);
+        console.log("Total wage: " + this.totalwage);
+        console.log("Total working days: " + this.totalwalkingdays)
+
+        
     }
 }
 
-function askEmployee() {
-    rl.question("Enter employee name (or type 'n' to stop): ", (employeeName) => {
-        if (employeeName.toLowerCase() === 'n') {
-            rl.close();
-        } else {
-            const employee = new DailyEmployeeWages(employeeName);
-            employee.checkAttendance();
-        }
-    });
-}
-
-askEmployee();
+const result = new Emmployeewages();
+result.calculatewage();
