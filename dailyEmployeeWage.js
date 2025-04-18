@@ -1,4 +1,4 @@
-class Employeewagecalculator{
+class Employee{
 
     constructor(wageperhour = 20){
         this.wageperhour = wageperhour;
@@ -10,19 +10,19 @@ class Employeewagecalculator{
 const ispresent = Math.floor(Math.random() * 2);
 
 if(ispresent == 0){
-    console.log("Employee is absent");
-    console.log("Daily wage is 0");
+    console.log("Employee is : Absent");
+    console.log("Daily wage is : 0");
 }else{ 
-    console.log("Employee is present");
+    console.log("Employee is : Present");
     const check = Math.floor(Math.random() * 2)+1;
    
       if(check == 1){
-        console.log("Employee is full time");
+        console.log("Employee is Present : Full time");
         const emp = new Employeewagecalculator();
         const dailywage = emp.wageperhour * emp.fulltimehours;
         console.log("Daily wage is " + dailywage);
       }else{
-        console.log("Employee is part time");
+        console.log("Employee is Present : Part time");
         const emp = new Employeewagecalculator();
         const dailywage = emp.wageperhour * emp.parttimehours;
         console.log("Daily wage is " + dailywage);
