@@ -1,9 +1,9 @@
-class Emmployeewages {
+class Employee {
     constructor(wageperhour = 20) {
         this.wageperhour = wageperhour;
     }
 
-    getworkhours(empcheck) {
+    getWorkHours(empcheck) {
         switch (empcheck) {
             case 1:
                 return 8;
@@ -16,25 +16,31 @@ class Emmployeewages {
 
     calculatewage() {
         const check = Math.floor(Math.random() * 2); 
-
+        
         if (check === 1) {
-            console.log("Employee is present");
+            console.log("Employee is : Present");
             const checker = Math.floor(Math.random() * 2) + 1; 
-
+            
             const hours = this.getworkhours(checker);
 
             if (hours === 8) {
-                console.log("Employee is full time present");
+                console.log("Employee is present : Full time");
             } else if (hours === 4) {
-                console.log("Employee is part time present");
+                console.log("Employee is present : Part time");
             }
 
+            console.log(`Work hours : ${hours}`);
+
             const empwage = hours * this.wageperhour;
-            console.log("Employee wage is: " + empwage);
+            console.log(`Employee wage is :  ${empwage}`);
 
         } else {
-            console.log("Employee is absent");
-            console.log("Employee wage is: 0");
+
+           this.getworkhours(0);
+           console.log("Employee is : Absent");
+           console.log("Employee wage is : 0");
+           console.log(`Work hours : 0`);
+
         }
     }
 }
