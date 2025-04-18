@@ -1,4 +1,4 @@
-class EmployeeWageCalculator {
+class Employee {
     constructor() {
 
         const isprent = Math.floor(Math.random() * 2);
@@ -13,7 +13,7 @@ class EmployeeWageCalculator {
 
 }
 
-new EmployeeWageCalculator();
+new Employee();
 
 
 
