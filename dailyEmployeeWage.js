@@ -21,7 +21,7 @@ class Employee {
             console.log("Employee is : Present");
             const checker = Math.floor(Math.random() * 2) + 1; 
             
-            const hours = this.getworkhours(checker);
+            const hours = this.getWorkHours(checker);
 
             if (hours === 8) {
                 console.log("Employee is present : Full time");
@@ -36,7 +36,7 @@ class Employee {
 
         } else {
 
-           this.getworkhours(0);
+           this.getWorkHours(0);
            console.log("Employee is : Absent");
            console.log("Employee wage is : 0");
            console.log(`Work hours : 0`);
@@ -45,5 +45,5 @@ class Employee {
     }
 }
 
-const result = new Emmployeewages();
+const result = new Employee();
 result.calculatewage();
