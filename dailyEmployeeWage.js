@@ -1,56 +1,72 @@
-function getWorkHours(type) {
-    switch (type) {
-        case 'full-time':
-            return 8;
-        case 'part-time':
-            return 4;
-        default:
-            return 0;
-    }
-}
 
-class EmployeeWageCalculator {
-    constructor(wagePerHour = 20) {
-        this.wagePerHour = wagePerHour;
-        this.totalWorkingHours = 0;
-        this.totalWorkingDays = 0;
-        this.totalWage = 0;
-        this.maxHours = 120;
-        this.maxDays = 20;
+class Emmployee {
+    constructor(wageperhour = 20) {
+        this.wageperhour = wageperhour;
+        this.workingdays = 20;
+        this.totalwage = 0;
+        this.totalworkinghours = 0;
+        this.totalwalkingdays = 0;
     }
 
-    simulateMonth() {
-        console.log("----- Employee Monthly Work Simulation -----");
+    getworkhours(empcheck) {
+        switch (empcheck) {
+            case 1:
+                return 8;
+            case 2:
+                return 4;
+            default:
+                return 0;
+        }
+    }
 
-        while (this.totalWorkingDays < this.maxDays && this.totalWorkingHours < this.maxHours) {
-            this.totalWorkingDays++; 
+    calculatewage() {
+        const check = Math.floor(Math.random() * 2); 
 
-            const isPresent = Math.floor(Math.random() * 2); // 0 = Absent, 1 = Present
+        while(this.totalwalkingdays  < this.workingdays) {
+            this.totalwalkingdays++;
 
-            if (isPresent === 0) {
-                console.log(`Day ${this.totalWorkingDays}: Absent - No Wage`);
-                continue; 
+            if (check === 1) {
+                console.log("Employee is present: " + this.totalwalkingdays + " day");
+                const checker = Math.floor(Math.random() * 2) + 1; 
+    
+                const hours = this.getworkhours(checker);
+    
+                if (hours === 8) {
+                    console.log("Employee is Present : Full time");
+                } else if (hours === 4) {
+                    console.log("Employee is Present : Part time");
+                }
+
+                
+                const empwage = hours * this.wageperhour;
+                console.log("Employee wage is: " + empwage);
+                console.log(`Total hours worked : ${hours} hours in a day`);
+                
+                this.totalworkinghours += hours;
+            
+                this.totalwage += empwage;
+               
+            } else {
+
+                console.log("Employee is Absent : " + this.totalwalkingdays + " day");
+                console.log("Employee wage is: 0");
+                console.log(`Total hours worked : ${this.totalworkinghours} hours in a day`);
+                continue;
             }
 
-            const workType = Math.floor(Math.random() * 2 ) ? 'part-time' : 'full-time';
-            const hoursWorked = getWorkHours(workType);
 
-            if (this.totalWorkingHours + hoursWorked > this.maxHours) break;
 
-            this.totalWorkingHours += hoursWorked;
-            const dailyWage = hoursWorked * this.wagePerHour;
-            this.totalWage += dailyWage;
-
-            console.log(`Day ${this.totalWorkingDays}: Present (${workType}) - ${hoursWorked} hrs - ₹${dailyWage}`);
         }
 
-        console.log("----- Final Summary -----");
-        console.log(`Total Days Counted: ${this.totalWorkingDays}`);
-        console.log(`Total Hours Worked: ${this.totalWorkingHours}`);
-        console.log(`Total Wage: ₹${this.totalWage}`);
+        console.log(`\nSummary of employee wage:`);
+
+        console.log("Total working hours: " + this.totalworkinghours);
+        console.log("Total wage: " + this.totalwage);
+        console.log("Total working days: " + this.totalwalkingdays)
+
+        
     }
 }
 
-
-const employee = new EmployeeWageCalculator();
-employee.simulateMonth();
+const result = new Emmployee();
+result.calculatewage();
