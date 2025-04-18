@@ -42,10 +42,14 @@ class Emmployee {
 
                 this.totalworkinghours += hours;
                 this.totalwage += empwage;
+                console.log("Total working hours: " + this.totalworkinghours);
+                console.log("Total wage: " + this.totalwage);
             } else {
                 console.log("Employee is Absent : " + this.totalwalkingdays + " day");
                 console.log("Employee wage is: 0");
                 console.log(`Total hours worked today: 0 hours`);
+                console.log("Total working hours: " + this.totalworkinghours);
+                console.log("Total wage: " + this.totalwage);
             }
 
             console.log("--------------------------------");
