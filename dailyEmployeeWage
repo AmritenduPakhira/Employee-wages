@@ -1,0 +1,23 @@
+class Employee {
+    constructor() {
+
+        const isprent = Math.floor(Math.random() * 2);
+
+        if (isprent == 0) {
+            console.log("Absent");
+        } else {
+            console.log("Present")
+        }
+
+    }
+
+}
+
+new Employee();
+
+
+
+
+
+
+
